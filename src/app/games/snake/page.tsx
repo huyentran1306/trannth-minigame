@@ -84,14 +84,14 @@ export default function Snake() {
   };
 
   return (
-    <GameShell title="Rắn Săn Mồi" emoji="🐍" score={score} highScore={highScore} color="from-green-500 to-emerald-400">
+    <GameShell title="Rắn Săn Mồi" emoji="🐍" score={score} highScore={highScore} color="from-green-400 to-emerald-500">
       <div className="flex flex-col items-center gap-4">
         <div className="relative" style={{ width: COLS * CELL, height: ROWS * CELL }}>
           {/* Grid background */}
-          <div className="absolute inset-0 rounded-xl overflow-hidden border border-green-500/30 bg-green-950/40">
+          <div className="absolute inset-0 rounded-xl overflow-hidden border border-green-200 bg-green-50">
             {Array.from({ length: ROWS }).map((_, r) =>
               Array.from({ length: COLS }).map((_, c) => (
-                <div key={`${r}-${c}`} className="absolute border border-green-900/30"
+                <div key={`${r}-${c}`} className="absolute border border-green-100"
                   style={{ left: c * CELL, top: r * CELL, width: CELL, height: CELL }} />
               ))
             )}
@@ -115,7 +115,7 @@ export default function Snake() {
 
           {/* Dead overlay */}
           {dead && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/70 rounded-xl">
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/90 rounded-xl">
               <div className="text-4xl mb-2">💀</div>
               <div className="text-white font-black text-xl">GAME OVER</div>
               <div className="text-gray-300 text-sm mb-4">Score: {score}</div>
@@ -136,7 +136,7 @@ export default function Snake() {
           {[["", "UP", ""], ["LEFT", "DOWN", "RIGHT"]].map((row, ri) =>
             row.map((d, ci) => d ? (
               <button key={`${ri}-${ci}`} onPointerDown={() => swipe(d as Dir)}
-                className="w-12 h-12 bg-green-800/60 rounded-xl text-white font-bold text-xl flex items-center justify-center active:bg-green-600">
+                className="w-12 h-12 bg-green-100 rounded-xl text-white font-bold text-xl flex items-center justify-center active:bg-green-600">
                 {d === "UP" ? "↑" : d === "DOWN" ? "↓" : d === "LEFT" ? "←" : "→"}
               </button>
             ) : <div key={`${ri}-${ci}`} />)

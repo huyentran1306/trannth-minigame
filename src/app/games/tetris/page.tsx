@@ -114,12 +114,12 @@ export default function Tetris() {
   return (
     <GameShell title="Tetris" emoji="🟦" score={score} highScore={highScore} color="from-yellow-500 to-orange-400">
       <div className="flex flex-col items-center gap-4">
-        <div className="border border-yellow-500/30 rounded-xl overflow-hidden bg-gray-950/80"
+        <div className="border border-yellow-500/30 rounded-xl overflow-hidden bg-purple-50/80"
           style={{ width: COLS * CELL, height: ROWS * CELL }}>
           {display.map((row, r) => (
             <div key={r} className="flex">
               {row.map((color, c) => (
-                <div key={c} className={`border border-gray-900/50 ${color || "bg-gray-950"}`}
+                <div key={c} className={`border border-gray-900/50 ${color || "bg-purple-50"}`}
                   style={{ width: CELL, height: CELL }} />
               ))}
             </div>

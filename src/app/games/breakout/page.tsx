@@ -82,7 +82,7 @@ export default function Breakout() {
       }
 
       // Draw
-      ctx.fillStyle = "#030712"; ctx.fillRect(0, 0, W, H);
+      const bgGr = ctx.createLinearGradient(0, 0, 0, H); bgGr.addColorStop(0, "#f0f9ff"); bgGr.addColorStop(1, "#e0e7ff"); ctx.fillStyle = bgGr; ctx.fillRect(0, 0, W, H);
 
       // Bricks
       for (const row of s.bricks) for (const brick of row) {
@@ -134,21 +134,21 @@ export default function Breakout() {
   };
 
   return (
-    <GameShell title="Bắn Gạch" emoji="🧱" score={ui.score} highScore={ui.highScore} color="from-teal-500 to-cyan-400">
+    <GameShell title="Bắn Gạch" emoji="🧱" score={ui.score} highScore={ui.highScore} color="from-teal-400 to-cyan-500">
       <div className="flex flex-col items-center gap-3">
         <div className="flex gap-2 text-sm">{"❤️".repeat(ui.lives)}</div>
         <div className="relative rounded-2xl overflow-hidden border border-teal-500/30"
           onMouseMove={handleMouseMove} onTouchMove={handleTouch}>
           <canvas ref={canvasRef} width={W} height={H} className="block" style={{ maxWidth: "100%", maxHeight: "60vh" }} />
           {!ui.running && !ui.dead && !ui.won && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/60" onClick={() => { state.current.running = true; setUi(u => ({ ...u, running: true })); }}>
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/80" onClick={() => { state.current.running = true; setUi(u => ({ ...u, running: true })); }}>
               <div className="text-5xl mb-3">🧱</div>
               <div className="text-white font-black text-xl">BẮN GẠCH</div>
               <div className="text-gray-300 text-sm mt-2">Move mouse / touch to play</div>
             </div>
           )}
           {(ui.dead || ui.won) && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/70">
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/90">
               <div className="text-4xl mb-2">{ui.won ? "🏆" : "💀"}</div>
               <div className="text-white font-black text-xl">{ui.won ? "YOU WIN!" : "GAME OVER"}</div>
               <div className="text-gray-300 text-sm mt-1">Score: {ui.score}</div>

@@ -169,7 +169,7 @@ export default function SpaceShooter() {
           onClick={startOrShoot}>
           <canvas ref={canvasRef} width={W} height={H} className="block" style={{ maxWidth: "100%", maxHeight: "55vh" }} />
           {!ui.running && !ui.dead && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/60">
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-indigo-950/80">
               <div className="text-6xl mb-3">🚀</div>
               <div className="text-white font-black text-2xl">SPACE SHOOTER</div>
               <div className="text-gray-300 text-sm mt-2">Tap to start</div>

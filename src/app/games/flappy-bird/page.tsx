@@ -68,7 +68,11 @@ export default function FlappyBird() {
       }
 
       // Draw
-      ctx.fillStyle = "#0f172a";
+      // sky gradient
+      const skyGr = ctx.createLinearGradient(0, 0, 0, H);
+      skyGr.addColorStop(0, "#bfdbfe");
+      skyGr.addColorStop(1, "#e0f2fe");
+      ctx.fillStyle = skyGr;
       ctx.fillRect(0, 0, W, H);
       // Stars
       ctx.fillStyle = "rgba(255,255,255,0.4)";
@@ -98,7 +102,7 @@ export default function FlappyBird() {
       ctx.restore();
 
       // Ground
-      ctx.fillStyle = "#1e3a1a";
+      ctx.fillStyle = "#4ade80";
       ctx.fillRect(0, H - 20, W, 20);
 
       rafRef.current = requestAnimationFrame(loop);
@@ -115,20 +119,20 @@ export default function FlappyBird() {
   }, [jump]);
 
   return (
-    <GameShell title="Chim Bay" emoji="🐦" score={display.score} highScore={display.highScore} color="from-sky-500 to-blue-400">
+    <GameShell title="Chim Bay" emoji="🐦" score={display.score} highScore={display.highScore} color="from-sky-400 to-blue-500">
       <div className="flex flex-col items-center gap-4">
         <div className="relative rounded-2xl overflow-hidden border border-sky-500/30 cursor-pointer"
           onClick={() => { if (display.dead) reset(); else jump(); }}>
           <canvas ref={canvasRef} width={W} height={H} className="block" style={{ maxWidth: "100%", maxHeight: "60vh" }} />
           {!display.running && !display.dead && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/50">
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/80">
               <div className="text-6xl mb-4">🐦</div>
               <div className="text-white font-black text-2xl">Chim Bay</div>
               <div className="text-gray-300 text-sm mt-2">Tap / Space to start</div>
             </div>
           )}
           {display.dead && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/70">
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/90">
               <div className="text-4xl mb-2">💀</div>
               <div className="text-white font-black text-xl">GAME OVER</div>
               <div className="text-gray-300 text-sm mt-1">Score: {display.score}</div>
