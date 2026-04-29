@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import AppWrapper from "@/components/app-wrapper";
 
 export const metadata: Metadata = {
   title: "🌸 Kawaii Arcade",
@@ -16,7 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="vi">
       <body className="min-h-screen" style={{ background: "linear-gradient(135deg, #fdf2f8 0%, #fce7f3 50%, #ede9fe 100%)" }}>
-        {children}
+          <AppWrapper>{children}</AppWrapper>
       </body>
     </html>
   );

@@ -240,7 +240,39 @@ export default function Pinball() {
             </div>
           )}
         </div>
-        <p className="text-xs text-violet-400">Z/← flipper trái • X/→ flipper phải • Space nạp lực</p>
+        {/* Mobile touch controls */}
+        <div className="flex items-center justify-between w-full max-w-[300px] gap-3 mt-1">
+          <button
+            onPointerDown={() => { state.current.lFlip = true; }}
+            onPointerUp={() => { state.current.lFlip = false; }}
+            onPointerLeave={() => { state.current.lFlip = false; }}
+            className="flex-1 py-4 rounded-2xl font-black text-white text-xl select-none active:scale-95 transition-transform"
+            style={{ background: "rgba(139,92,246,0.8)", boxShadow: "0 4px 16px rgba(139,92,246,0.4)", touchAction: "none" }}>
+            ◀ L
+          </button>
+          <button
+            onPointerDown={() => { state.current.charging = true; }}
+            onPointerUp={() => {
+              const s = state.current;
+              if (s.charging && !s.ball.active) {
+                s.ball = { x: LAUNCH_X, y: H - 110, vx: 0, vy: -s.power * 0.18, active: true };
+                s.charging = false; s.power = 0; s.launched = true;
+              }
+            }}
+            className="px-4 py-4 rounded-2xl font-black text-white text-sm select-none active:scale-95 transition-transform"
+            style={{ background: "rgba(234,179,8,0.85)", boxShadow: "0 4px 16px rgba(234,179,8,0.3)", touchAction: "none" }}>
+            ▲ FIRE
+          </button>
+          <button
+            onPointerDown={() => { state.current.rFlip = true; }}
+            onPointerUp={() => { state.current.rFlip = false; }}
+            onPointerLeave={() => { state.current.rFlip = false; }}
+            className="flex-1 py-4 rounded-2xl font-black text-white text-xl select-none active:scale-95 transition-transform"
+            style={{ background: "rgba(139,92,246,0.8)", boxShadow: "0 4px 16px rgba(139,92,246,0.4)", touchAction: "none" }}>
+            R ▶
+          </button>
+        </div>
+        <p className="text-xs text-violet-400/60 hidden md:block">Z/← flipper trái • X/→ flipper phải • Space nạp lực</p>
       </div>
     </GameShell>
   );

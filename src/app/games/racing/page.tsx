@@ -180,7 +180,22 @@ export default function Racing() {
             </div>
           )}
         </div>
-        <p className="text-xs text-rose-400">← → / A D để đổi làn. Chạm màn hình để điều khiển</p>
+        {/* Touch lane buttons */}
+        <div className="flex gap-3 w-full max-w-xs mt-1">
+          <button
+            onPointerDown={() => { state.current.targetLane = Math.max(0, state.current.targetLane - 1); if (!state.current.running && !state.current.dead) { state.current.running = true; setUi(u => ({ ...u, running: true })); } }}
+            className="flex-1 py-4 rounded-2xl font-black text-white text-2xl select-none active:scale-95 transition-transform"
+            style={{ background: "rgba(239,68,68,0.8)", boxShadow: "0 4px 16px rgba(239,68,68,0.4)", touchAction: "none" }}>
+            ◀
+          </button>
+          <button
+            onPointerDown={() => { state.current.targetLane = Math.min(LANES - 1, state.current.targetLane + 1); if (!state.current.running && !state.current.dead) { state.current.running = true; setUi(u => ({ ...u, running: true })); } }}
+            className="flex-1 py-4 rounded-2xl font-black text-white text-2xl select-none active:scale-95 transition-transform"
+            style={{ background: "rgba(239,68,68,0.8)", boxShadow: "0 4px 16px rgba(239,68,68,0.4)", touchAction: "none" }}>
+            ▶
+          </button>
+        </div>
+        <p className="text-xs text-rose-400/60 hidden md:block">← → / A D để đổi làn. Chạm màn hình để điều khiển</p>
       </div>
     </GameShell>
   );

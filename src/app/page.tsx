@@ -1,7 +1,8 @@
 "use client";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { usePlayer } from "@/contexts/player-context";
 
 interface GameProgress { bestScore: number; completed: boolean; }
 
@@ -33,17 +34,11 @@ const FLOATING = ["🌸","⭐","🌈","💫","🎀","🍬","🌙","✨","🎠","
 
 export default function Home() {
   const [filter, setFilter] = useState("Tất cả");
-  const [progress, setProgress] = useState<Record<string, GameProgress>>({});
   const [showChallenge, setShowChallenge] = useState(false);
+  const { player, totalCompleted, resetPlayer } = usePlayer();
 
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem("kawaii-arcade-progress");
-      if (saved) setProgress(JSON.parse(saved));
-    } catch {}
-  }, []);
-
-  const completed = Object.values(progress).filter(p => p.completed).length;
+  const progress = player?.scores || {};
+  const completed = totalCompleted;
   const filtered = filter === "Tất cả" ? GAMES : GAMES.filter(g => g.tag === filter);
 
   return (
@@ -71,6 +66,19 @@ export default function Home() {
             WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent"
           }}>Kawaii Arcade</h1>
           <p className="text-lg text-purple-400 font-medium">20 mini games siêu cute ✨</p>
+          {player && (
+            <div className="flex items-center justify-center gap-3 mt-4">
+              <div className="flex items-center gap-2 px-4 py-2 rounded-full"
+                style={{ background: "rgba(255,255,255,0.7)", backdropFilter: "blur(8px)", border: "1.5px solid rgba(168,85,247,0.2)" }}>
+                <span className="text-xl">{player.avatar}</span>
+                <span className="font-black text-purple-700 text-sm">{player.name}</span>
+                <span className="text-xs text-purple-400 font-semibold">{completed}/20</span>
+              </div>
+              <button onClick={resetPlayer} className="text-xs text-purple-300 hover:text-purple-500 transition-colors font-medium px-3 py-2 rounded-full hover:bg-white/50">
+                Đổi tên
+              </button>
+            </div>
+          )}
         </motion.div>
 
         {/* GRAND CHALLENGE BANNER */}
@@ -127,7 +135,7 @@ export default function Home() {
                 {GAMES.map(g => {
                   const done = progress[g.id]?.completed;
                   return (
-                    <Link key={g.id} href={`/games/${g.id}`} onClick={() => setShowChallenge(false)}
+                     <Link key={g.id} href={`/games/${g.id}`} onClick={() => setShowChallenge(false)}
                       className={`flex flex-col items-center p-2 rounded-2xl border-2 transition-all hover:scale-105 ${done ? "border-green-200 bg-green-50" : "border-gray-100 bg-gray-50"}`}>
                       <span className="text-2xl">{g.emoji}</span>
                       {done && <span className="text-xs text-green-600 font-bold">✓</span>}
@@ -193,8 +201,8 @@ export default function Home() {
                         </div>
                         <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-purple-50 text-purple-400">{game.tag}</span>
                       </div>
-                      {prog?.bestScore ? (
-                        <div className="mt-1 text-xs text-green-600 font-bold">🏅 {prog.bestScore} pts</div>
+                      {prog?.best ? (
+                        <div className="mt-1 text-xs text-green-600 font-bold">🏅 {prog.best} pts</div>
                       ) : null}
                     </div>
                   </div>
