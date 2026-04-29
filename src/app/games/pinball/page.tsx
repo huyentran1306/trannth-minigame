@@ -255,7 +255,8 @@ export default function Pinball() {
             onPointerUp={() => {
               const s = state.current;
               if (s.charging && !s.ball.active) {
-                s.ball = { x: LAUNCH_X, y: H - 110, vx: 0, vy: -s.power * 0.18, active: true };
+                const launchPower = Math.max(40, s.power);
+                s.ball = { x: LAUNCH_X, y: H - 110, vx: 0, vy: -launchPower * 0.18, active: true };
                 s.charging = false; s.power = 0; s.launched = true;
               }
             }}
